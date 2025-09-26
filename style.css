@@ -1,0 +1,124 @@
+/* Body and container */
+body {
+  background: #ffe6f0; /* baby pink */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  width: 100%;
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* Headings */
+h1 {
+  color: #d6336c;
+  margin-bottom: 25px;
+}
+h2 {
+  color: #b30047;
+  margin-bottom: 10px;
+}
+
+/* Questions */
+.question-block {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ffd1e6;
+  text-align: left;
+}
+
+.question-block p {
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #a3003d;
+}
+
+.question-block label {
+  display: block;
+  margin: 8px 0;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.question-block input[type="radio"]:checked + span {
+  background: #ffd1e6;
+  border-color: #ff99c8;
+}
+
+.question-block label:hover {
+  background: #ffe6f0;
+  border: 1px solid #ff99c8;
+  transform: scale(1.02);
+}
+
+/* Buttons */
+button {
+  padding: 12px 25px;
+  border: none;
+  background: #ff4da6;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #e60073;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Result */
+#result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#emoji-display {
+  font-size: 3rem;
+  margin-top: 10px;
+}
+
+/* Utility */
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .question-block p {
+    font-size: 1rem;
+  }
+  button {
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+}
