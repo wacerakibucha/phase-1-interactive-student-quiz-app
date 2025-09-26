@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const personalityText = document.getElementById("personality-text");
   const emojiDisplay = document.getElementById("emoji-display");
   const restartBtn = document.getElementById("restart-btn");
+  const quoteBox = document.getElementById("quote-box");
 
+  // Quiz data
   const quizData = [
     { question: "How do you prefer to study?", options: { a:"Plan everything", b:"Last minute", c:"Relaxed pace", d:"Try different methods", e:"Use tech", f:"Creative ways", g:"With friends" }, typeMap:{a:"Overachiever",b:"Procrastinator",c:"Chill Learner",d:"Adaptive Explorer",e:"Tech Enthusiast",f:"Creative Thinker",g:"Social Learner"}},
     { question: "When you get homework, what do you do?", options: { a:"Finish immediately", b:"Delay", c:"Casually", d:"Experiment", e:"Use apps", f:"Add creative touches", g:"Do with friends" }, typeMap:{a:"Overachiever",b:"Procrastinator",c:"Chill Learner",d:"Adaptive Explorer",e:"Tech Enthusiast",f:"Creative Thinker",g:"Social Learner"}},
@@ -19,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { question: "What do you value most in learning?", options: { a:"Achievement", b:"Flexibility", c:"Relaxation", d:"Adaptability", e:"Innovation", f:"Creativity", g:"Collaboration" }, typeMap:{a:"Overachiever",b:"Procrastinator",c:"Chill Learner",d:"Adaptive Explorer",e:"Tech Enthusiast",f:"Creative Thinker",g:"Social Learner"}}
   ];
 
+  // Emoji mapping
   const typeEmoji = {
     "Overachiever":"📚",
     "Procrastinator":"🕒",
@@ -29,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Social Learner":"🤝"
   };
 
-  // Render quiz
+  // Render quiz questions dynamically
   function renderQuiz() {
     quizData.forEach((qItem, idx) => {
       const block = document.createElement("div");
@@ -60,11 +63,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderQuiz();
 
-  // Submit handler
-  quizForm.addEventListener("submit",(e)=>{
+  // Fetch motivational quote
+  async function fetchQuote() {
+    try {
+      const response = await fetch("https://api.quotable.io/random");
+      const data = await response.json();
+      quoteBox.textContent = `"${data.content}" — ${data.author}`;
+    } catch (error) {
+      quoteBox.textContent = "Could not load a quote.";
+      console.error(error);
+    }
+  }
+
+  // Handle quiz submission
+  quizForm.addEventListener("submit", (e)=>{
     e.preventDefault();
 
-    const counts = { "Overachiever":0,"Procrastinator":0,"Chill Learner":0,"Adaptive Explorer":0,"Tech Enthusiast":0,"Creative Thinker":0,"Social Learner":0 };
+    const counts = { 
+      "Overachiever":0,
+      "Procrastinator":0,
+      "Chill Learner":0,
+      "Adaptive Explorer":0,
+      "Tech Enthusiast":0,
+      "Creative Thinker":0,
+      "Social Learner":0 
+    };
 
     quizData.forEach((qItem, idx)=>{
       const selected = document.querySelector(`input[name="q${idx}"]:checked`);
@@ -78,9 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let maxCount = 0;
     let personality = "";
     for(let key in counts){
-      if(counts[key]>maxCount){
-        maxCount=counts[key];
-        personality=key;
+      if(counts[key] > maxCount){
+        maxCount = counts[key];
+        personality = key;
       }
     }
 
@@ -90,12 +113,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quizForm.classList.add("hidden");
     resultContainer.classList.remove("hidden");
+
+    // Fetch and display quote
+    fetchQuote();
   });
 
   // Restart quiz
-  restartBtn.addEventListener("click",()=>{
+  restartBtn.addEventListener("click", ()=>{
     quizForm.reset();
     quizForm.classList.remove("hidden");
     resultContainer.classList.add("hidden");
+
+    // Fetch new quote on restart
+    fetchQuote();
   });
+
 });
